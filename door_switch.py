@@ -7,7 +7,8 @@ from send_files import *
 
 GPIO.setmode(GPIO.BOARD)
 
-DOOR_SENSOR_PIN = 12
+DOOR_SENSOR_PIN_1 = 12
+DOOR_SENSOR_PIN_2 = 18
 
 isOpen = None
 oldIsOpen = None
@@ -15,21 +16,23 @@ valueOpen = 0
 valueClosed = 0
 diff = 0
 
-samples = 5 # The ADC module is powered with 5 V to match the industrial weight sensor output voltage (0-5V)
+samples = 50
 
 
-GPIO.setup(DOOR_SENSOR_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.setup(DOOR_SENSOR_PIN_1, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.setup(DOOR_SENSOR_PIN_2, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 def readValue():
 	# measurement value
 	value = 0
 	#Open a serial port that is connected to an Arduino
-	ser = serial.Serial(port='/dev/ttyACM1', baudrate=115200)
+	ser = serial.Serial(port='/dev/ttyACM0', baudrate=115200)
 	ser.flushInput()
 
 	for i in range(samples):
 		# Read in data from Serial until \n (new line) received
 		ser_bytes = ser.readline()
+		# print(ser_bytes)
 
 	for i in range(samples):
 		# Read in data from Serial until \n (new line) received
@@ -43,12 +46,13 @@ def readValue():
 	ser.close()
 	# Average measurements
 	value = value//samples
+
 	# Write received data to variable
 	return value
 
 while True:
 	oldIsOpen = isOpen
-	isOpen = GPIO.input(DOOR_SENSOR_PIN)
+	isOpen = GPIO.input(DOOR_SENSOR_PIN_1) | GPIO.input(DOOR_SENSOR_PIN_2)
 
 	if (isOpen and (isOpen != oldIsOpen)):
 		print("Door Open")
@@ -60,6 +64,6 @@ while True:
 		print(valueClosed)
 		diff = valueClosed-valueOpen
 		print("Difference = " + str(diff))
-		#send_weight(diff)
+		weight_request(diff)
 
 	time.sleep(1)

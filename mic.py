@@ -16,7 +16,6 @@ index = 0 # check device index first
 
 pa = pyaudio.PyAudio()
 
-'''
 info = pa.get_host_api_info_by_index(0)
 numdevices = info.get('deviceCount')
 for i in range(0, numdevices):
@@ -24,7 +23,6 @@ for i in range(0, numdevices):
 		name = pa.get_device_info_by_host_api_device_index(0, i).get('name')
 		if (name == "Andrea PureAudio: USB Audio (hw:1,0)"):
 			index = i
-'''
 
 stream = pa.open(
 	format=FORMAT,

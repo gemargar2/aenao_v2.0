@@ -4,7 +4,6 @@ import wave
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-from wav2csv import *
 
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
@@ -14,7 +13,6 @@ index = 1 # check device index first
 
 pa = pyaudio.PyAudio()
 
-'''
 info = pa.get_host_api_info_by_index(0)
 numdevices = info.get('deviceCount')
 for i in range(0, numdevices):
@@ -23,7 +21,8 @@ for i in range(0, numdevices):
 		#print("Input Device id ", i, " - ", name)
 		if (name == "USB Audio Device: - (hw:0,0)"):
 			index = i	
-'''
+
+print(i)
 
 stream = pa.open(
 	format=FORMAT,

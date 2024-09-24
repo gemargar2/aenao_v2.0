@@ -6,8 +6,8 @@ import os
 
 def vib_request():
 	try:
-		url = "http://160.40.49.238:8000/api/maintenance"
-
+		url = "https://ae3nao.iti.gr/api/maintenance"
+		
 		# Decide the two file paths according to your computer system
 		csvFilePath = r'data/vib_sample.csv'
 
@@ -34,30 +34,30 @@ def vib_request():
 		}
 
 		response = requests.request("POST", url, headers=headers, data=payload)
-		#print(response.text)
+		print(response.text)
 	except:
 		print("Failed to connect with the endpoint")
 
 def audio_request():
 	try:
-		url = "http://160.40.49.238:8000/api/audio-file"
-
+		url = "https://ae3nao.iti.gr/api/audio-file"
+		
 		# Decide the two file paths according to your computer system
 		timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 		new_filename = "data/audio/audio_" + timestamp + ".wav" # Write different file
 		old_filename = 'data/audio/audio_sample.wav'
-		command = "mv '" + old_filename + "' '" + new_filename + "'"
+		command = "cp '" + old_filename + "' '" + new_filename + "'"
 		os.system(command)
-
+		
 		payload = {}
 		files=[
 		  ('audio', (new_filename, open(new_filename, 'rb'), 'audio/wav'))
 		]
-
+		
 		response = requests.request("POST", url, data=payload, files=files)
-
-		#print(response.text)
-		command = "rm '" + new_filename + "'"
+		
+		print(response.text)
+		# command = "rm '" + new_filename + "'"
 		os.system(command)
 	except:
 		print("Failed to connect with the endpoint")
@@ -98,7 +98,7 @@ def amp_request():
 
 def weight_request(weight):
 	try:
-		url_user = "http://160.40.49.238:8000/api/userBin"
+		url_user = "https://ae3nao.iti.gr/api/userBin"
 
 		timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 		# Post to endpoint
@@ -120,6 +120,6 @@ def weight_request(weight):
 
 		# Post to endpoint
 		response = requests.request("POST", url_user, headers=headers, data=payload)
-		#print(response.json())
+		print(response.json())
 	except:
 		print("Failed to connect with the endpoint")

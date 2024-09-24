@@ -3,7 +3,7 @@ import serial
 from datetime import datetime
 
 seconds = 1 # 10 seconds
-csvFilePath = "data/vib_sample.csv" # Overwrite one file
+csvFilePath = "data/vibration/vib_sample.csv" # Overwrite one file
 
 #Open a csv file and set it up to receive comma delimited input
 file = open(csvFilePath, newline='', mode='w') # open in write mode (delete previous recordings)
