@@ -10,12 +10,6 @@ GPIO.setmode(GPIO.BOARD)
 DOOR_SENSOR_PIN_1 = 12
 DOOR_SENSOR_PIN_2 = 18
 
-isOpen = None
-oldIsOpen = None
-valueOpen = 0
-valueClosed = 0
-diff = 0
-
 samples = 50
 
 
@@ -26,7 +20,7 @@ def readValue():
 	# measurement value
 	value = 0
 	#Open a serial port that is connected to an Arduino
-	ser = serial.Serial(port='/dev/ttyACM0', baudrate=115200)
+	ser = serial.Serial(port='/dev/ttyACM1', baudrate=115200)
 	ser.flushInput()
 
 	for i in range(samples):
@@ -50,20 +44,31 @@ def readValue():
 	# Write received data to variable
 	return value
 
-while True:
-	oldIsOpen = isOpen
-	isOpen = GPIO.input(DOOR_SENSOR_PIN_1) | GPIO.input(DOOR_SENSOR_PIN_2)
+def userProcess():
+	isOpen = False
+	oldIsOpen = False
+	valueOpen = 0
+	valueClosed = 0
+	diff = 0
+	counter = 0
 
-	if (isOpen and (isOpen != oldIsOpen)):
-		print("Door Open")
-		valueOpen = readValue()
-		print(valueOpen)
-	elif (isOpen != oldIsOpen):
-		print("Door Closed")
-		valueClosed = readValue()
-		print(valueClosed)
-		diff = valueClosed-valueOpen
-		print("Difference = " + str(diff))
-		weight_request(diff)
+	while True:
+		oldIsOpen = isOpen
+		isOpen = GPIO.input(DOOR_SENSOR_PIN_1) | GPIO.input(DOOR_SENSOR_PIN_2)
 
-	time.sleep(1)
+		if (isOpen and (isOpen != oldIsOpen)):
+			print("Door Open")
+			valueOpen = readValue()
+			print(valueOpen)
+		elif (isOpen != oldIsOpen):
+			print("Door Closed")
+			valueClosed = readValue()
+			print(valueClosed)
+			diff = valueClosed-valueOpen
+			counter = counter + 1
+			print("Difference = " + str(diff))
+			weight_request(diff, valueClosed, counter)
+
+		time.sleep(1)
+
+userProcess()

@@ -9,7 +9,7 @@ import sounddevice as sd
 # Lets define audio variables
 # We will use the default PC or Laptop mic to input the sound
 
-device = 1 # id of the audio device by default
+device = 0 # id of the audio device by default
 window = 1000 # window for the data
 downsample = 1 # how much samples to drop
 channels = [1] # a list of audio channels

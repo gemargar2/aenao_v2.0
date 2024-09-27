@@ -96,7 +96,7 @@ def amp_request():
 	except:
 		print("Failed to connect with the endpoint")
 
-def weight_request(weight):
+def weight_request(weight, total, counter):
 	try:
 		url_user = "https://ae3nao.iti.gr/api/userBin"
 
@@ -108,8 +108,8 @@ def weight_request(weight):
 			'timestamp': str(timestamp),
 			"weight": str(weight),
 			"metric_weight": "kg",
-			"total_weight": "3555",
-			"total_count": "6",
+			"total_weight": str(total),
+			"total_count": str(counter),
 			"fill_level": "16",
 			"fill_metric":"%"
 		})
@@ -117,7 +117,7 @@ def weight_request(weight):
 		headers = {
 			'Content-Type': 'application/json'
 		}
-
+		# print(payload)
 		# Post to endpoint
 		response = requests.request("POST", url_user, headers=headers, data=payload)
 		print(response.json())

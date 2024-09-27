@@ -11,7 +11,7 @@
 Adafruit_ADS1115 ads;  /* Use this for the 16-bit version */
 // Adafruit_ADS1015 ads;     /* Use this for the 12-bit version */
 
-float noLoadOffset = 95; // Prior to calibration the output voltage for zero load is 151mV.
+float noLoadOffset = 130; // Prior to calibration the output voltage for zero load is 151mV.
 float weightVoltageRatio = 3.9; // According to approximations the voltage drops 4.12mV for every kilogram added to the smart bin
 float next, prev;
 float filter[WINDOW];
@@ -48,6 +48,8 @@ void setup(void)
 
   results = ads.readADC_Differential_0_1();
   voltage = results * multiplier;
+//  noLoadOffset = voltage;
+//  weight = 0;
   weight = (voltage - noLoadOffset) / weightVoltageRatio;
   prev = weight;
   median = weight;
