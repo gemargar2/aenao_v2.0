@@ -1,12 +1,17 @@
 # python -m pip install pyaudio
+import os
+import time
 import pyaudio
 import wave
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
 from datetime import datetime
+
+'''
 import os
-import time
+os.chdir("/home/raspberry/Desktop")
+'''
 
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
@@ -46,7 +51,7 @@ def record_sound(seconds):
 	pa.terminate()
 	print('stop recording sound')
 
-	filename = "data/audio/audio_sample.wav" # Overwrite one file
+	filename = "aenao_data/sound/audio_sample.wav" # Overwrite one file
 	# filename = "data/audio_sample_" + sys.argv[1] + ".wav" # Write different file
 
 	obj = wave.open(filename, 'wb')

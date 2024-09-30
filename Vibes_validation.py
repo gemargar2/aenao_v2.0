@@ -100,30 +100,24 @@ def extract_features(sample, max_measurements=0, scale=1):
 #---------------------------------------------------------------------------------------------------------------------------------
 
 def run_vibes_validation():
-    '''
+
     scaler = joblib.load('scaler_data2')
     #instance = create_feature_set_val('./ShawnHymel tinyml-example-anomaly-detection master datasets/ceiling-fan/fan_0_low_1_weight/0329.csv')
-    instance = create_feature_set_val('aenao_v2.0/data/vibration/vib_sample.csv')
+    instance = create_feature_set_val('aenao_data/vibration/vib_sample2.csv')
     instance = scaler.transform(instance)
     instance = instance.reshape(instance.shape[0], 1, instance.shape[1])
 
 
     model = tensorflow.keras.models.load_model('vibration_AE.h5')
     print(model.summary())
-
     predictions = model.predict(instance)
-
     mse = np.mean(np.mean(np.square(instance - predictions), axis=1))
-    '''
-
-    mse = 0.8
-    THRESHOLD = 1.2
 
     if mse < THRESHOLD:
-        print("Normal Vibrations")
+        #print("Normal Vibrations")
         message = "OK"
     else:
-        print("Abnormal Vibrations")
+        #print("Abnormal Vibrations")
         message = "NOT OK"
         
     return message

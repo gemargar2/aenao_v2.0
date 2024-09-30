@@ -16,6 +16,8 @@ samples = 50
 GPIO.setup(DOOR_SENSOR_PIN_1, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 GPIO.setup(DOOR_SENSOR_PIN_2, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
+counter = 0
+
 def readValue():
 	# measurement value
 	value = 0
@@ -44,14 +46,16 @@ def readValue():
 	# Write received data to variable
 	return value
 
+def getCounter():
+	return counter
+
 def userProcess():
 	isOpen = False
 	oldIsOpen = False
 	valueOpen = 0
 	valueClosed = 0
 	diff = 0
-	counter = 0
-
+	
 	while True:
 		oldIsOpen = isOpen
 		isOpen = GPIO.input(DOOR_SENSOR_PIN_1) | GPIO.input(DOOR_SENSOR_PIN_2)
@@ -71,4 +75,4 @@ def userProcess():
 
 		time.sleep(1)
 
-userProcess()
+#userProcess()

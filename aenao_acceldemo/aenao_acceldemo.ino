@@ -88,7 +88,5 @@ void loop() {
   Serial.print(event.acceleration.x/G_FORCE,6); Serial.print(", "); 
   Serial.print(event.acceleration.y/G_FORCE,6); Serial.print(", "); 
   Serial.print(event.acceleration.z/G_FORCE,6); Serial.println();
-
-  delay(0.744);
 #endif
 }

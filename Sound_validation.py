@@ -46,9 +46,9 @@ def extract_signal_features_fhigh_and_stft(
     return features
 
 def run_sound_validation(): 
-    '''
     os.chdir("/home/raspberry/Desktop")
     # set hyperparameters
+    THRESHOLD = 1.211
 
     n_fft = 2048
     hop_length = 512
@@ -65,16 +65,12 @@ def run_sound_validation():
 
     predictions1 = model.predict(instance)
     mse = np.mean(np.mean(np.square(instance - predictions1), axis=1))
-    '''
-
-    mse = 0.8
-    THRESHOLD = 1.211
 
     if mse < THRESHOLD:
-        print("Normal sound")
+        #print("Normal sound")
         message = "OK" 
     else:
-        print("Abnormal sound")
+        #print("Abnormal sound")
         message = "NOT OK" 
     
     return message

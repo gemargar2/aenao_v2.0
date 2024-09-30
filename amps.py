@@ -43,8 +43,8 @@ def record_current(seconds):
 	pa.terminate()
 	print('stop recording current')
 
-	filename = "data/power/amps_sample.wav" # Overwrite one file
-	# filename = "data/amps_sample_" + sys.argv[1] + ".wav" # Write different file
+	filename = "aenao_data/power/amp_sample.wav" # Overwrite one file
+	# filename = "data/amp_sample_" + sys.argv[1] + ".wav" # Write different file
 
 	obj = wave.open(filename, 'wb')
 	obj.setnchannels(CHANNELS)
