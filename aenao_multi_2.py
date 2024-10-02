@@ -16,8 +16,7 @@ from Sound_validation import *
 from bin_status import *
 from door_switch import *
 
-motor_sleep = 15 # 15 minutes
-general_sleep = 1
+motor_sleep = 5*60 # 15 minutes
 
 def sleep_mode(arg):
 	print("Sleep")
@@ -29,7 +28,6 @@ def sleep_mode(arg):
 
 def binProcess():
 	while True:
-		'''
 		# creating processes
 		p1 = multiprocessing.Process(target=record_sound, args=[1])
 		p2 = multiprocessing.Process(target=record_vibration, args=[1])
@@ -42,13 +40,11 @@ def binProcess():
 		p1.join()
 		p2.join()
 		p3.join()
-		'''
+		# Send data to db
 		global_request()
-		# Read value from weight sensor
-		weight = readValue()
-		counter = getCounter()
+		[count, weight] = getCounter()
 		# Send an overall report
-		# validation_mode(weight, counter)
+		validation_mode(weight, count)
 		time.sleep(motor_sleep)
 
 def main():

@@ -23,17 +23,19 @@ motor_sleep = 30
 
 a = [0]*3
 power = 0
+audio_decision = "NOT OK"
+vibes_decision = "NOT OK"
 
-def validation_mode(weight, counter):
+def validation_mode(weight, count):
 	print("Motor Operation Validation")
 	# Here goes Stelios' validation script
 	print("Validating sound")
-	audio_decision = run_sound_validation()
+	#audio_decision = run_sound_validation()
 	time.sleep(1)
 
 	# Here goes Stelios' validation script
 	print("Validating vibrations")
-	vibes_decision = run_vibes_validation()
+	#vibes_decision = run_vibes_validation()
 	a = std_calc("aenao_data/vibration/vib_sample.csv")
 	time.sleep(1)
 
@@ -68,15 +70,15 @@ def validation_mode(weight, counter):
 			}
 		],
 		"total_weight": weight,
-		"total_count": counter
+		"total_count": count
 	})
 	print(payload)
 	
 	try:
 		print("Success")
 		# Post to endpoint
-		#response = requests.request("POST", url_motor, headers=headers, data=payload)
-		#print(response.json())
+		response = requests.request("POST", url_motor, headers=headers, data=payload)
+		print(response.json())
 	except:
 		print("Failed to connect with the endpoint")
 
