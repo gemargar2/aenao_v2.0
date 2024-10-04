@@ -70,7 +70,7 @@ def audio_request():
 		print("Failed to connect with the endpoint")
 
 def amp_request():
-	url = "https://ae3nao.iti.gr/api/audio-file"
+	url = "https://ae3nao.iti.gr/api/current-file"
 	
 	# Decide the two file paths according to your computer system
 	timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -80,7 +80,7 @@ def amp_request():
 	os.system(command)
 	
 	payload = {}
-	files=[('audio', (new_filename, open(new_filename, 'rb'), 'audio/wav'))]
+	files=[('current', (new_filename, open(new_filename, 'rb'), 'audio/wav'))]
 	try:
 		response = requests.request("POST", url, data=payload, files=files)
 		print(response.text)

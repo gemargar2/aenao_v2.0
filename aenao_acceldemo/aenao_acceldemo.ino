@@ -61,13 +61,6 @@ void setup(void) {
 }
 
 void loop() {
-  lis.read();      // get X Y and Z data at once
-#ifdef MESSAGES
-  // Then print out the raw data
-  Serial.print("X:  "); Serial.print(lis.x);
-  Serial.print("  \tY:  "); Serial.print(lis.y);
-  Serial.print("  \tZ:  "); Serial.print(lis.z);
-#endif
   /* Or....get a new sensor event, normalized */
   sensors_event_t event;
   lis.getEvent(&event);
