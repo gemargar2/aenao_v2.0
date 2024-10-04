@@ -28,22 +28,27 @@ void setup(void) {
   Serial.begin(115200);
   while (!Serial) delay(10);     // will pause Zero, Leonardo, etc until serial console opens
 
+#ifdef MESSAGES
   Serial.println("LIS3DH test!");
+#endif
 
   if (! lis.begin(0x18)) {   // change this to 0x19 for alternative i2c address
     Serial.println("Couldnt start");
     while (1) yield();
   }
 
+#ifdef MESSAGES
   Serial.println("LIS3DH found!");
 
   // lis.setRange(LIS3DH_RANGE_4_G);   // 2, 4, 8 or 16 G!
 
   Serial.print("Range = "); Serial.print(2 << lis.getRange());
   Serial.println("G");
+#endif
 
   // lis.setDataRate(LIS3DH_DATARATE_1_HZ);
-  lis.setDataRate(LIS3DH_DATARATE_LOWPOWER_5KHZ);
+  lis.setDataRate(LIS3DH_DATARATE_200_HZ);
+#ifdef MESSAGES
   Serial.print("Data rate set to: ");
   switch (lis.getDataRate()) {
     case LIS3DH_DATARATE_1_HZ: Serial.println("1 Hz"); break;
@@ -58,6 +63,7 @@ void setup(void) {
     case LIS3DH_DATARATE_LOWPOWER_5KHZ: Serial.println("1.344kHz Normal mode OR 5 Khz Low Power"); break;
     case LIS3DH_DATARATE_LOWPOWER_1K6HZ: Serial.println("16 Khz Low Power"); break;
   }
+#endif
 }
 
 void loop() {
@@ -81,5 +87,6 @@ void loop() {
   Serial.print(event.acceleration.x/G_FORCE,6); Serial.print(", "); 
   Serial.print(event.acceleration.y/G_FORCE,6); Serial.print(", "); 
   Serial.print(event.acceleration.z/G_FORCE,6); Serial.println();
+  delayMicroseconds(1900);
 #endif
 }
