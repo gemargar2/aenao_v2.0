@@ -34,7 +34,7 @@ def getCounter():
 				columns = [row[0], row[1], row[2]]
 				data.append(columns)
 	print(f'Number of throws = {data[-1][0]}')
-	return [data[-1][0], data[-1][1]]
+	return data[-1][0]
 
 def readValue():
 	# measurement value

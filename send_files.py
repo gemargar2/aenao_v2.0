@@ -44,7 +44,9 @@ def vib_request():
 	try:
 		response = requests.request("POST", url, headers=headers, data=payload)
 		print(response.text)
-		print("Success")
+		print("Data sent successfully")
+		command = "rm '" + new_filename + "'"
+		os.system(command)
 	except:
 		print("Failed to connect with the endpoint")
 
@@ -63,9 +65,10 @@ def audio_request():
 	try:
 		response = requests.request("POST", url, data=payload, files=files)
 		print(response.text)
-		# command = "rm '" + new_filename + "'"
-		# os.system(command)
-		print("Success")
+		print("Data sent successfully")
+		command = "rm '" + new_filename + "'"
+		os.system(command)
+		
 	except:
 		print("Failed to connect with the endpoint")
 
@@ -84,9 +87,9 @@ def amp_request():
 	try:
 		response = requests.request("POST", url, data=payload, files=files)
 		print(response.text)
-		#command = "rm '" + new_filename + "'"
-		#os.system(command)
-		print("Success")
+		print("Data sent successfully")
+		command = "rm '" + new_filename + "'"
+		os.system(command)
 	except:
 		print("Failed to connect with the endpoint")
 
@@ -111,11 +114,10 @@ def weight_request(weight, total, counter):
 		'Content-Type': 'application/json'
 	}
 	try:
-		#print(payload)
 		#Post to endpoint
 		response = requests.request("POST", url_user, headers=headers, data=payload)
 		print(response.json())
-		print("Success")
+		print("Data sent successfully")
 	except:
 		print("Failed to connect with the endpoint")
 		#print(weight, total, counter)

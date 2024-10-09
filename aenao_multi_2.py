@@ -16,7 +16,7 @@ from Sound_validation import *
 from bin_status import *
 from door_switch import *
 
-motor_sleep = 5*60 # 15 minutes
+motor_sleep = 15*60 # 15 minutes
 
 def sleep_mode(arg):
 	print("Sleep")
@@ -42,7 +42,8 @@ def binProcess():
 		p3.join()
 		# Send data to db
 		global_request()
-		[count, weight] = getCounter()
+		count = getCounter()
+		weight = readValue() 
 		# Send an overall report
 		validation_mode(weight, count)
 		time.sleep(motor_sleep)
