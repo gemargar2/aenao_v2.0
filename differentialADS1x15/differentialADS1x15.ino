@@ -72,7 +72,6 @@ void loop(void)
 //    filter[i] = next;
     fifo(next);
     median = median_filter(filter);
-//    Serial.println(voltage);
 //    Serial.print(weight);
 //    Serial.print(" ");
 //    Serial.print(next);

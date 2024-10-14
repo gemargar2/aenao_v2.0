@@ -21,7 +21,7 @@ GPIO.setup(DOOR_SENSOR_PIN_2, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 counter = 0
 
-csvFilePath = "aenao_data/weight/log.csv" # Overwrite one file
+csvFilePath = "aenao_data/log_files/throws.csv" # Overwrite one file
 
 def getCounter():
 	data = []
@@ -68,14 +68,14 @@ def userProcess():
 	isOpen = False
 	oldIsOpen = False
 	valueOpen = 0
-	valueClosed = 0
+	valueClosed = readValue()
 	diff = 0
 	counter = 0
-	with open(csvFilePath, newline='', mode='w') as csvfile:
+	with open(csvFilePath, newline='\n', mode='a') as csvfile:
 		writer = csv.writer(csvfile, delimiter=',')
-		writer.writerow(['counter', 'weight', 'timestamp'])
+		# writer.writerow(['counter', 'weight', 'timestamp'])
 		timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-		writer.writerow([0, 0, timestamp])
+		writer.writerow([0, valueClosed, timestamp])
 	
 	while True:
 		oldIsOpen = isOpen
@@ -87,6 +87,7 @@ def userProcess():
 			print(valueOpen)
 		elif (isOpen != oldIsOpen):
 			print("Door Closed")
+			time.sleep(10) # sleep for 10 seconds to avoid lid bounce
 			valueClosed = readValue()
 			print(valueClosed)
 			diff = valueClosed-valueOpen

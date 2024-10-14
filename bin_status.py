@@ -23,8 +23,8 @@ motor_sleep = 30
 
 a = [0]*3
 power = 0
-audio_decision = "NOT OK"
-vibes_decision = "NOT OK"
+audio_decision = "OK"
+vibes_decision = "OK"
 
 def validation_mode(weight, count):
 	print("Motor Operation Validation")

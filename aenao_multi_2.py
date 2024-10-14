@@ -16,22 +16,33 @@ from Sound_validation import *
 from bin_status import *
 from door_switch import *
 
-motor_sleep = 15*60 # 15 minutes
+motor_sleep = 15 # 15 minutes
+record_time = 10 # 10 seconds
 
-def sleep_mode(arg):
-	print("Sleep")
-	countdown = motor_sleep
-	for i in range(1,arg):
-		time.sleep(1)
-		countdown -= 1
-		print(str(countdown) + " seconds left")
+csvFilePath = "aenao_data/log_files/status.csv" # Overwrite one file
+
+def log_sleep(arg):
+	# ------------------- Logging part ----------------------	
+	try:
+		record_current(1) # record 1 second of current
+		weight = readValue()
+		power = rms_calc("aenao_data/power/amp_sample.wav")
+		with open(csvFilePath, newline='\n', mode='a') as csvfile:
+			writer = csv.writer(csvfile, delimiter=',')
+			# writer.writerow(['power', 'weight', 'timestamp'])
+			timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+			writer.writerow([int(power), weight, timestamp])
+	except:
+		print("Can't reach sensors")
+		
 
 def binProcess():
 	while True:
+		# ------------------- Predictive maintenance part ----------------------
 		# creating processes
-		p1 = multiprocessing.Process(target=record_sound, args=[1])
-		p2 = multiprocessing.Process(target=record_vibration, args=[1])
-		p3 = multiprocessing.Process(target=record_current, args=[1])
+		p1 = multiprocessing.Process(target=record_sound, args=[record_time])
+		p2 = multiprocessing.Process(target=record_vibration, args=[record_time])
+		p3 = multiprocessing.Process(target=record_current, args=[record_time])
 		# starting processes
 		p1.start()
 		p2.start()
@@ -46,7 +57,7 @@ def binProcess():
 		weight = readValue() 
 		# Send an overall report
 		validation_mode(weight, count)
-		time.sleep(motor_sleep)
+		time.sleep(15*60)
 
 def main():
 	# creating processes
@@ -60,6 +71,7 @@ def main():
 	p5.join()
 
 if __name__ == "__main__":
-	main()
+	while True:
+		userProcess()
 
 
